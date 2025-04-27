@@ -1,0 +1,29 @@
+<div th:fragment="transaction-income-add" xmlns:th="http://www.w3.org/1999/xhtml">
+    <h4 style="text-align: center">Добавить доход</h4>
+    <form action="/transaction/add-income" method="post">
+        <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+
+        <select th:required="required" class="form-control" id="addPersonTypeId" name="personTypeId">
+            <option value="">--Выберите тип лица--</option>
+            <option th:each="personType : ${allPersonTypes}" th:value="${personType.id}" th:text="${personType.title}"></option>
+        </select><br>
+
+        <select th:required="required" class="form-control" id="addIncomeCategoryId" name="categoryId">
+            <option value="">--Выберите категорию дохода--</option>
+            <option th:each="userIncomeCategory : ${allUserIncomeCategories}" th:value="${userIncomeCategory.id}" th:text="${userIncomeCategory.title}"></option>
+        </select><br>
+
+        <select th:required="required" class="form-control" id="addIncomeAccountId" name="accountId">
+            <option value="">--Выберите счет поступления--</option>
+            <option th:each="userAccount : ${allUserAccounts}" th:value="${userAccount.id}" th:text="${userAccount.title}"></option>
+        </select><br>
+
+        <input th:required="required" type="date" name="date" placeholder="Выберите дату поступления" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" id="dateIncome" class="form-control"/><br>
+
+        <input th:required="required" type="number" name="amount" min="0.01" step="0.01" placeholder="Введите сумму поступления" class="form-control"><br>
+
+        <div style="text-align: center">
+            <button type="submit" class="btn btn-success">Добавить доход</button>
+        </div>
+    </form>
+</div>

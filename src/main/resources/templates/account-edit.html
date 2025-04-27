@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{blocks/account/metaHead :: metaHead}" />
+
+<body>
+
+<svg th:replace="~{blocks/account/images :: images}" />
+
+<header th:replace="~{blocks/account/header :: header}" />
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary">
+
+            <div th:replace="~{blocks/account/sidebarMenu :: sidebarMenu}" />
+
+        </div>
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2" th:text="${h1}" />
+            </div>
+
+            <main>
+                <div class="container mt-5 mb-5">
+                    <div th:each="el : ${account}">
+                        <form th:action="'/account/' + ${el.id} + '/edit'" method="post">
+                            <input type="text" th:value="${el.title}" name="title" placeholder="Введите название счета" class="form-control"><br>
+                            <input th:required="required" type="number" name="amount" th:value="${#numbers.formatDecimal(el.amount, 0, 2, 'POINT')}" step="0.01" placeholder="Введите сумму на счете" class="form-control"><br>
+                            <button type="submit" class="btn btn-success">Обновить</button>
+                        </form>
+                    </div>
+                </div>
+            </main>
+
+        </main>
+    </div>
+</div>
+
+<footer th:replace="~{blocks/account/footer :: footer}" />
+
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{blocks/account/metaHead :: metaHead}" />
+
+<body>
+
+<svg th:replace="~{blocks/account/images :: images}" />
+
+<header th:replace="~{blocks/account/header :: header}" />
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary">
+
+            <div th:replace="~{blocks/account/sidebarMenu :: sidebarMenu}" />
+
+        </div>
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2" th:text="${h1}" />
+            </div>
+
+            <main>
+                <div class="container mt-5 mb-5">
+                    <div th:each="el : ${transaction}">
+                        <form th:action="'/transaction/income/' + ${el.id} + '/edit'" method="post">
+                            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+
+                            <p style="font-weight: bold;">
+                                Тип лица
+                            </p>
+                            <select th:required="required" class="form-control" id="addPersonTypeId" name="personTypeId">
+                                <option th:selected="${personType.id==el.personType.id}" th:each="personType : ${allPersonTypes}" th:value="${personType.id}" th:text="${personType.title}"></option>
+                            </select><br>
+
+                            <p style="font-weight: bold;">
+                                Категория дохода
+                            </p>
+                            <select th:required="required" class="form-control" id="addIncomeCategoryId" name="categoryId">
+                                <option th:selected="${userIncomeCategory.id==el.category.id}" th:each="userIncomeCategory : ${allUserIncomeCategories}" th:value="${userIncomeCategory.id}" th:text="${userIncomeCategory.title}"></option>
+                            </select><br>
+
+                            <p style="font-weight: bold;">
+                                Счет
+                            </p>
+                            <select th:required="required" class="form-control" id="addIncomeAccountId" name="accountId">
+                                <option th:selected="${userAccount.id==el.account.id}" th:each="userAccount : ${allUserAccounts}" th:value="${userAccount.id}" th:text="${userAccount.title}"></option>
+                            </select><br>
+
+                            <p style="font-weight: bold;">
+                                Дата совершения платежа
+                            </p>
+                            <input th:required="required" type="date" name="date" th:value="${#temporals.format(el.date, 'yyyy-MM-dd')}" id="dateIncome" class="form-control"/><br>
+
+                            <p style="font-weight: bold;">
+                                Сумма платежа
+                            </p>
+                            <input th:required="required" type="number" name="amount" th:value="${#numbers.formatDecimal(el.amount, 1, 2, 'POINT')}" min="0.01" step="0.01" placeholder="Введите сумму пополнения" class="form-control"><br>
+
+                            <!-- todo сделать переключение доход/расход -->
+                            <input type="hidden" id="typeId" name="typeId" th:value="${el.type.id}" /><br>
+
+                            <button type="submit" class="btn btn-success">Обновить</button>
+                        </form>
+                    </div>
+                </div>
+            </main>
+
+        </main>
+    </div>
+</div>
+
+<footer th:replace="~{blocks/account/footer :: footer}" />
+
+</body>
+</html>

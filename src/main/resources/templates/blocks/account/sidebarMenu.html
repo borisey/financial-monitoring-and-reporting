@@ -1,0 +1,127 @@
+<div th:fragment="sidebarMenu" xmlns:th="http://www.w3.org/1999/xhtml" class="offcanvas-md offcanvas-end bg-body-tertiary" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="sidebarMenuLabel">Walletus.net</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="/my">
+                    <svg class="bi"><use xlink:href="#house-fill"/></svg>
+                    Дашборд
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="/analytics">
+<!--                    <svg class="bi"><use xlink:href="#chart-line"/></svg>-->
+                    <i class="fa-solid fa-chart-line"></i>
+                    Аналитика
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2" href="/accounts">
+                    <i class="fa-solid fa-piggy-bank"></i>
+                    Счета
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2" href="/categories">
+                    <i class="fa-solid fa-list"></i>
+                    Категории
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2" href="/transactions">
+                    <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                    Транзакции
+                </a>
+            </li>
+        </ul>
+
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase">
+            <span>Добавить счет</span>
+            <a class="link-secondary" href="/account/add">
+                <svg class="bi"><use xlink:href="#plus-circle"/></svg>
+            </a>
+        </h6>
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase">
+            <span>Добавить категорию доходов</span>
+            <a class="link-secondary" href="/category/income/add">
+                <svg class="bi"><use xlink:href="#plus-circle"/></svg>
+            </a>
+        </h6>
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase">
+            <span>Добавить категорию расходов</span>
+            <a class="link-secondary" href="/category/expense/add">
+                <svg class="bi"><use xlink:href="#plus-circle"/></svg>
+            </a>
+        </h6>
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase">
+            <span>Добавить доход</span>
+            <a class="link-secondary" href="/transaction/income/add">
+                <svg class="bi"><use xlink:href="#plus-circle"/></svg>
+            </a>
+        </h6>
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase">
+            <span>Добавить расход</span>
+            <a class="link-secondary" href="/transaction/expense/add">
+                <svg class="bi"><use xlink:href="#plus-circle"/></svg>
+            </a>
+        </h6>
+<!--        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase">-->
+<!--            <span>Добавить расход</span>-->
+<!--            <a class="link-secondary" href="/expense/add">-->
+<!--                <svg class="bi"><use xlink:href="#plus-circle"/></svg>-->
+<!--            </a>-->
+<!--        </h6>-->
+<!--                            <ul class="nav flex-column mb-auto">-->
+<!--                                <li class="nav-item">-->
+<!--                                    <a class="nav-link d-flex align-items-center gap-2" href="#">-->
+<!--                                        <svg class="bi"><use xlink:href="#file-earmark-text"/></svg>-->
+<!--                                        Current month-->
+<!--                                    </a>-->
+<!--                                </li>-->
+<!--                                <li class="nav-item">-->
+<!--                                    <a class="nav-link d-flex align-items-center gap-2" href="#">-->
+<!--                                        <svg class="bi"><use xlink:href="#file-earmark-text"/></svg>-->
+<!--                                        Last quarter-->
+<!--                                    </a>-->
+<!--                                </li>-->
+<!--                                <li class="nav-item">-->
+<!--                                    <a class="nav-link d-flex align-items-center gap-2" href="#">-->
+<!--                                        <svg class="bi"><use xlink:href="#file-earmark-text"/></svg>-->
+<!--                                        Social engagement-->
+<!--                                    </a>-->
+<!--                                </li>-->
+<!--                                <li class="nav-item">-->
+<!--                                    <a class="nav-link d-flex align-items-center gap-2" href="#">-->
+<!--                                        <svg class="bi"><use xlink:href="#file-earmark-text"/></svg>-->
+<!--                                        Year-end sale-->
+<!--                                    </a>-->
+<!--                                </li>-->
+<!--                            </ul>-->
+
+        <hr class="my-3">
+
+        <ul class="nav flex-column mb-auto">
+            <!--                        <li class="nav-item">-->
+            <!--                            <a class="nav-link d-flex align-items-center gap-2" href="#">-->
+            <!--                                <svg class="bi"><use xlink:href="#gear-wide-connected"/></svg>-->
+            <!--                                Settings-->
+            <!--                            </a>-->
+            <!--                        </li>-->
+            <li class="nav-item">
+                <!--                            <a class="nav-link d-flex align-items-center gap-2" href="/logout">-->
+                <!--                                <svg class="bi"><use xlink:href="#door-closed"/></svg>-->
+                <!--                                Выйти-->
+                <!--                            </a>-->
+
+                <form class="nav-item" th:action="@{/logout}" method="post">
+                    <p th:text="'Вы авторизовались как ' + ${username}" class="nav-link d-flex align-items-center" style="margin: 0;" />
+
+                    <input type="submit" class="nav-link d-flex align-items-center" value="Выйти"/>
+                </form>
+            </li>
+        </ul>
+    </div>
+</div>

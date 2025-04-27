@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{blocks/account/metaHead :: metaHead}" />
+
+<head>
+    <script src="https://getbootstrap.com/docs/5.3/assets/js/color-modes.js"></script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" th:content="${metaDescription}">
+    <meta name="keywords" th:content="${metaKeywords}">
+    <title th:text="${metaTitle}" />
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/dashboard/">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link rel="stylesheet" th:href="@{/account/css/bootstrap.min.css}">
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" href="https://getbootstrap.com/docs/5.3/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
+    <link rel="icon" href="https://getbootstrap.com/docs/5.3/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="https://getbootstrap.com/docs/5.3/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
+    <link rel="manifest" href="https://getbootstrap.com/docs/5.3/assets/img/favicons/manifest.json">
+    <link rel="mask-icon" href="https://getbootstrap.com/docs/5.3/assets/img/favicons/safari-pinned-tab.svg" color="#712cf9">
+    <link rel="icon" href="https://getbootstrap.com/docs/5.3/assets/img/favicons/favicon.ico">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <meta name="theme-color" content="#712cf9">
+
+    <style>
+        .bd-placeholder-img {
+          font-size: 1.125rem;
+          text-anchor: middle;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          user-select: none;
+        }
+
+        @media (min-width: 768px) {
+          .bd-placeholder-img-lg {
+            font-size: 3.5rem;
+          }
+        }
+
+        .b-example-divider {
+          width: 100%;
+          height: 3rem;
+          background-color: rgba(0, 0, 0, .1);
+          border: solid rgba(0, 0, 0, .15);
+          border-width: 1px 0;
+          box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+        }
+
+        .b-example-vr {
+          flex-shrink: 0;
+          width: 1.5rem;
+          height: 100vh;
+        }
+
+        .bi {
+          vertical-align: -.125em;
+          fill: currentColor;
+        }
+
+        .nav-scroller {
+          position: relative;
+          z-index: 2;
+          height: 2.75rem;
+          overflow-y: hidden;
+        }
+
+        .nav-scroller .nav {
+          display: flex;
+          flex-wrap: nowrap;
+          padding-bottom: 1rem;
+          margin-top: -1px;
+          overflow-x: auto;
+          text-align: center;
+          white-space: nowrap;
+          -webkit-overflow-scrolling: touch;
+        }
+
+        .btn-bd-primary {
+          --bd-violet-bg: #712cf9;
+          --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+
+          --bs-btn-font-weight: 600;
+          --bs-btn-color: var(--bs-white);
+          --bs-btn-bg: var(--bd-violet-bg);
+          --bs-btn-border-color: var(--bd-violet-bg);
+          --bs-btn-hover-color: var(--bs-white);
+          --bs-btn-hover-bg: #6528e0;
+          --bs-btn-hover-border-color: #6528e0;
+          --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+          --bs-btn-active-color: var(--bs-btn-hover-color);
+          --bs-btn-active-bg: #5a23c8;
+          --bs-btn-active-border-color: #5a23c8;
+        }
+
+        .bd-mode-toggle {
+          z-index: 1500;
+        }
+
+        .bd-mode-toggle .dropdown-menu .active .bi {
+          display: block !important;
+        }
+    </style>
+
+
+    <!-- Custom styles for this template -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link th:href="@{/account/css/dashboard.css}" rel="stylesheet">
+
+    <!--start Скрипты для аналитики-->
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!--    <link rel="stylesheet"-->
+<!--          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">-->
+    <script type="text/javascript"
+            src="https://www.gstatic.com/charts/loader.js"></script>
+    <!--end Скрипты для аналитики-->
+
+</head>
+
+<body>
+
+<svg th:replace="~{blocks/account/images :: images}" />
+
+<header th:replace="~{blocks/account/header :: header}" />
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary">
+
+            <div th:replace="~{blocks/account/sidebarMenu :: sidebarMenu}" />
+
+        </div>
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2" th:text="${h1}" />
+            </div>
+
+            <h2 style="text-align: center">
+                Выберите даты представления аналитики
+            </h2>
+
+            <form action="/analytics" method="get">
+
+                <input th:required="required" type="date" name="dateFrom" placeholder="Выберите дату начала" th:value="${dateFrom}" id="dateFrom" class="form-control"/><br>
+                <input th:required="required" type="date" name="dateTo" placeholder="Выберите дату завершения" th:value="${dateTo}" id="dateTo" class="form-control"/><br>
+
+                <div style="text-align: center">
+                    <button type="submit" class="btn btn-success">Получить аналитику</button>
+                </div>
+            </form>
+
+            <div class="row">
+                <div class="col">
+                    <h3 style="text-align: center" th:each="userIncome : ${allUserIncome}">
+                        <p th:text="'Доходы за указанный период: ' + ${#numbers.formatDecimal(userIncome, 1, 2)}" />
+                    </h3>
+
+                </div>
+                <div class="col">
+                    <h3 style="text-align: center" th:each="userExpense : ${allUserExpense}">
+                        <p th:text="'Расходы за указанный период: ' + ${#numbers.formatDecimal(userExpense, 1, 2)}" />
+                    </h3>
+                </div>
+            </div>
+
+            <div style="justify-content: center;">
+                <h3 style="text-align: center;">Анализ доходов</h3>
+                <div id="income_chart_div"></div>
+                <div id="income_piechart" style="width: 900px; height: 500px;"></div>
+            </div>
+
+            <script th:inline="javascript">
+                var real_income_data = /*[[${chartIncomeData}]]*/'noValue';
+                $(document).ready(function() {
+                    google.charts.load('current', {
+                        packages : [ 'corechart', 'bar' ]
+                    });
+                    google.charts.setOnLoadCallback(drawColumnIncomeChart);
+                    google.charts.setOnLoadCallback(drawIncomePieChart);
+                });
+                function drawColumnIncomeChart() {
+                    var income_data = new google.visualization.DataTable();
+                    income_data.addColumn('string', 'Категории доходов');
+                    income_data.addColumn('number', 'Общая сумма дохода');
+                    Object.keys(real_income_data).forEach(function(key) {
+                        income_data.addRow([ key, real_income_data[key] ]);
+                    });
+                    var options = {
+                        title : 'Анализ доходов',
+                        hAxis : {
+                            title : 'Категории доходов',
+                        },
+                        vAxis : {
+                            title : 'Общая сумма дохода'
+                        }
+                    };
+                    var chart = new google.visualization.ColumnChart(document
+                            .getElementById('income_chart_div'));
+                    chart.draw(income_data, options);
+                }
+                function drawIncomePieChart() {
+                    var income_data = new google.visualization.DataTable();
+                    income_data.addColumn('string', 'Категории доходов');
+                    income_data.addColumn('number', 'Общая сумма дохода');
+                    Object.keys(real_income_data).forEach(function(key) {
+                        income_data.addRow([ key, real_income_data[key] ]);
+                    });
+                    var options = {
+                        title : 'Анализ доходов'
+                    };
+                    var chart = new google.visualization.PieChart(document
+                            .getElementById('income_piechart'));
+                    chart.draw(income_data, options);
+                }
+            </script>
+
+            <div style="justify-content: center;">
+                <h3 style="text-align: center;">Анализ расходов</h3>
+                <div id="expense_chart_div"></div>
+                <div id="expense_piechart" style="width: 900px; height: 500px;"></div>
+            </div>
+
+            <script th:inline="javascript">
+                var real_expense_data = /*[[${chartExpenseData}]]*/'noValue';
+                $(document).ready(function() {
+                    google.charts.load('current', {
+                        packages : [ 'corechart', 'bar' ]
+                    });
+                    google.charts.setOnLoadCallback(drawColumnExpenseChart);
+                    google.charts.setOnLoadCallback(drawExpensePieChart);
+                });
+                function drawColumnExpenseChart() {
+                    var expense_data = new google.visualization.DataTable();
+                    expense_data.addColumn('string', 'Категории расходов');
+                    expense_data.addColumn('number', 'Общая сумма расходов');
+                    Object.keys(real_expense_data).forEach(function(key) {
+                        expense_data.addRow([ key, real_expense_data[key] ]);
+                    });
+                    var options = {
+                        title : 'Анализ расходов',
+                        hAxis : {
+                            title : 'Категории расходов',
+                        },
+                        vAxis : {
+                            title : 'Общая сумма расходов'
+                        }
+                    };
+                    var chart = new google.visualization.ColumnChart(document
+                            .getElementById('expense_chart_div'));
+                    chart.draw(expense_data, options);
+                }
+                function drawExpensePieChart() {
+                    var expense_data = new google.visualization.DataTable();
+                    expense_data.addColumn('string', 'Категории расходов');
+                    expense_data.addColumn('number', 'Общая сумма расходов');
+                    Object.keys(real_expense_data).forEach(function(key) {
+                        expense_data.addRow([ key, real_expense_data[key] ]);
+                    });
+                    var options = {
+                        title : 'Анализ расходов'
+                    };
+                    var chart = new google.visualization.PieChart(document
+                            .getElementById('expense_piechart'));
+                    chart.draw(expense_data, options);
+                }
+            </script>
+
+            <h2 style="text-align: center;">
+                Прогноз бюджетов
+            </h2>
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <h3 style="text-align: center">Прогноз доходов</h3>
+                    <div class="table-responsive small">
+                        <table class="table table-striped table-sm">
+                            <thead>
+                            <tr>
+                                <th style="text-align: center;">Название категории</th>
+                                <th style="text-align: center;">Прогнозируемый доход</th>
+                                <th style="text-align: center;">Фактический доход</th>
+                                <th style="text-align: center;">Разница между фактическим доходом и прогнозируемым</th>
+                                <th style="text-align: center;">Действия</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <tr th:each="userIncomeCategory : ${allUserIncomeCategories}">
+                                <td style="text-align: center;" th:text="${userIncomeCategory.title}" />
+                                <td style="text-align: center;" th:text="${userIncomeCategory.budget}" />
+                                <td style="text-align: center;" th:text="${userIncomeCategory.allamount}" />
+                                <td style="text-align: center;" th:text="${#numbers.formatDecimal(userIncomeCategory.allamount - userIncomeCategory.budget, 1, 2)}" />
+                                <td style="text-align: center;">
+                                    <a th:href="'/category/' + ${userIncomeCategory.id} + '/edit'"><i class="far fa-edit"></i></a>
+                                    <a th:href="'/category/' + ${userIncomeCategory.id} + '/delete'"><i class="far fa-trash-alt"></i></a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <h3 style="text-align: center">Прогноз расходов</h3>
+
+                    <div class="table-responsive small">
+                        <table class="table table-striped table-sm">
+                            <thead>
+                            <tr>
+                                <th style="text-align: center;">Название категории</th>
+                                <th style="text-align: center;">Прогнозируемый расход</th>
+                                <th style="text-align: center;">Фактический расход</th>
+                                <th style="text-align: center;">Оставшийся бюджет</th>
+                                <th style="text-align: center;">Действия</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <tr th:each="userExpenseCategory : ${allUserExpenseCategories}">
+                                <td style="text-align: center;" th:text="${userExpenseCategory.title}" />
+                                <td style="text-align: center;" th:text="${userExpenseCategory.budget}" />
+                                <td style="text-align: center;" th:text="${userExpenseCategory.allamount}" />
+                                <td style="text-align: center;" th:text="${#numbers.formatDecimal(userExpenseCategory.budget + userExpenseCategory.allamount, 1, 2)}" />
+                                <td style="text-align: center;">
+                                    <a th:href="'/category/' + ${userExpenseCategory.id} + '/edit'"><i class="far fa-edit"></i></a>
+                                    <a th:href="'/category/' + ${userExpenseCategory.id} + '/delete'"><i class="far fa-trash-alt"></i></a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <h2 style="text-align: center;">
+                Аналитика по счетам
+            </h2>
+
+            <div class="table-responsive small">
+                <table class="table table-striped table-sm">
+                    <thead>
+                    <tr>
+                        <th style="text-align: center;">Название счета</th>
+                        <th style="text-align: center;">Остаток средств на счете</th>
+                        <th style="text-align: center;">Действия</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr th:each="userAccount : ${allUserAccounts}">
+                        <td style="text-align: center;" th:text="${userAccount.title}" />
+                        <td style="text-align: center;" th:text="${#numbers.formatDecimal(userAccount.amount, 1, 2)}" />
+                        <td style="text-align: center;">
+                            <a th:href="'/account/' + ${userAccount.id} + '/edit'"><i class="far fa-edit"></i></a>
+                            <a th:href="'/account/' + ${userAccount.id} + '/delete'"><i class="far fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </main>
+    </div>
+</div>
+
+<footer th:replace="~{blocks/account/footer :: footer}" />
+
+</body>
+</html>

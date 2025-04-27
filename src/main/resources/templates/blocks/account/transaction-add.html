@@ -1,0 +1,11 @@
+<div th:fragment="transaction-add" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="row">
+        <div class="col-md-6">
+            <div th:replace="~{blocks/account/transaction-income-add :: transaction-income-add}" />
+        </div>
+
+        <div class="col-md-6">
+            <div th:replace="~{blocks/account/transaction-expense-add :: transaction-expense-add}" />
+        </div>
+    </div>
+</div>

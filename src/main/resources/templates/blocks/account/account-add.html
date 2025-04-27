@@ -1,0 +1,19 @@
+<div th:fragment="account-add" xmlns:th="http://www.w3.org/1999/xhtml">
+    <h4 style="text-align: center">Добавить счет</h4>
+    <form action="/account/add" method="post">
+        <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+
+        <p style="font-weight: bold;">
+            Название счета
+        </p>
+        <input th:required="required" type="text" name="title" placeholder="Введите название счета (карта Сбера, вклад в Сбере, инвестиционный счет)" class="form-control"><br>
+        <p style="font-weight: bold;">
+            Сумма на счете
+        </p>
+        <input th:required="required" type="number" name="amount" value="0" min="0" step="0.01" placeholder="Введите сумму на счете" class="form-control"><br>
+
+        <div style="text-align: center">
+            <button type="submit" class="btn btn-success">Добавить счет</button>
+        </div>
+    </form>
+</div>

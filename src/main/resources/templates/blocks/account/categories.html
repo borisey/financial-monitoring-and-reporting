@@ -1,0 +1,66 @@
+<div class="row" th:fragment="categories" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="col">
+
+        <h3 style="text-align: center">Категории доходов</h3>
+        <div class="table-responsive small">
+            <table class="table table-striped table-sm">
+                <thead>
+                    <tr>
+                        <th style="text-align: center;">Название категории</th>
+                        <th style="text-align: center;">Прогнозируемый доход</th>
+                        <th style="text-align: center;">Фактический доход</th>
+                        <th style="text-align: center;">Разница между фактическим доходом и прогнозируемым</th>
+                        <th style="text-align: center;">Действия</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr th:each="userIncomeCategory : ${allUserIncomeCategories}">
+                        <td style="text-align: center;" th:text="${userIncomeCategory.title}" />
+                        <td style="text-align: center;" th:text="${userIncomeCategory.budget}" />
+                        <td style="text-align: center;" th:text="${userIncomeCategory.allamount}" />
+                        <td style="text-align: center;" th:text="${#numbers.formatDecimal(userIncomeCategory.allamount - userIncomeCategory.budget, 1, 2)}" />
+                        <td style="text-align: center;">
+                            <a th:href="'/category/' + ${userIncomeCategory.id} + '/edit'"><i class="far fa-edit"></i></a>
+                            <a th:href="'/category/' + ${userIncomeCategory.id} + '/delete'"><i class="far fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="col">
+        <h3 style="text-align: center">Категории расходов</h3>
+
+        <div class="table-responsive small">
+            <table class="table table-striped table-sm">
+                <thead>
+                    <tr>
+                        <th style="text-align: center;">Название категории</th>
+                        <th style="text-align: center;">Прогнозируемый расход</th>
+                        <th style="text-align: center;">Фактический расход</th>
+                        <th style="text-align: center;">Оставшийся бюджет</th>
+                        <th style="text-align: center;">Действия</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr th:each="userExpenseCategory : ${allUserExpensesCategories}">
+                        <td style="text-align: center;" th:text="${userExpenseCategory.title}" />
+                        <td style="text-align: center;" th:text="${userExpenseCategory.budget}" />
+                        <td style="text-align: center;" th:text="${userExpenseCategory.allamount}" />
+                        <td style="text-align: center;" th:text="${#numbers.formatDecimal(userExpenseCategory.budget + userExpenseCategory.allamount, 1, 2)}" />
+                        <td style="text-align: center;">
+                            <a th:href="'/category/' + ${userExpenseCategory.id} + '/edit'"><i class="far fa-edit"></i></a>
+                            <a th:href="'/category/' + ${userExpenseCategory.id} + '/delete'"><i class="far fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div th:replace="~{blocks/account/category-add :: category-add}" />
+
+</div>
