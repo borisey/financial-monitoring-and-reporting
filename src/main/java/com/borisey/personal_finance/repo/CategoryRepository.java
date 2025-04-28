@@ -19,8 +19,8 @@ public interface CategoryRepository extends CrudRepository<Category, Long> {
             + " WHERE category.user_id=?1 "
             + " AND category.type_id=?2 "
 //            + " AND (balance.type_id=category.type_id) "
-            + " AND balance.date>=?3 "
-            + " AND balance.date<=?4 "
+//            + " AND balance.date>=?3 "
+//            + " AND balance.date<=?4 "
             + " GROUP BY category.id "
             , nativeQuery = true)
     Iterable<Category> findByUserIdAndTypeIdAmount(Long userId, Byte typeId, LocalDateTime dateTimeFrom, LocalDateTime dateTimeTo, Sort colName);
