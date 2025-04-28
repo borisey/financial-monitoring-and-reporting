@@ -3,8 +3,8 @@
 ### Быстрый старт
 1. Создайте директорию проекта, например, "personal-finance"
 2. Перейдите в директорию проекта в консоли и скопируйте репозиторий проекта в директорию проекта: выполните команду `git clone git@github.com:borisey/financial-monitoring-and-reporting ./`
-3. Установите MySQL в Docker-контейнере: в консоли (в корневой директории проекта) выполните команду `docker-compose up`
-4. Обновите зависимости Maven. В командной строке выполните команду `mvn clean install`
+3. Обновите зависимости Maven. В командной строке выполните команду `mvn clean install`
+4. Установите MySQL в Docker-контейнере: в консоли (в корневой директории проекта) выполните команду `docker-compose up`
 5. Запустите приложение в IDE IDEA: откройте файл `/src/main/java/com/borisey/personal_finance/PersonalFinanceApplication.java` и выполните команду `RUN`
 6. Перейдите в приложение `http://localhost:8080`
 7. Зарегистрируйтесь в приложении (по ссылке: /register)
