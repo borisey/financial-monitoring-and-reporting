@@ -193,6 +193,17 @@ public class Balance {
         return recipientBank;
     }
 
+    @Column(length = 255)
+    private String recipientAccountNumber;
+
+    public String getRecipientAccountNumber() {
+        return recipientAccountNumber;
+    }
+
+    public void setRecipientAccountNumber(String recipientAccountNumber) {
+        this.recipientAccountNumber = recipientAccountNumber;
+    }
+
     public void setRecipientBank(Bank recipientBank) {
         this.recipientBank = recipientBank;
     }

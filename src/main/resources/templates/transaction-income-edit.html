@@ -77,6 +77,11 @@
                                    pattern="\d{11}" title="ИНН должен состоять ровно из 11 цифр"><br>
 
                             <p style="font-weight: bold;">
+                                Расчетный счет получателя
+                            </p>
+                            <input type="number" name="recipientAccountNumber" th:value="${el.recipientAccountNumber}" class="form-control"><br>
+
+                            <p style="font-weight: bold;">
                                 Телефон
                             </p>
                             <input type="text" name="phone" th:value="${el.phone}" class="form-control"

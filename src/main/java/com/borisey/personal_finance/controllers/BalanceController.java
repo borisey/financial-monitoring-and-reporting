@@ -87,6 +87,10 @@ public class BalanceController {
         Iterable<Category> allUserExpensesCategories = categoryRepository.findByUserIdAndTypeIdAmount(userId, Type.EXPENSE, dateTimeFrom, dateTimeTo, Sort.by(Sort.Direction.DESC, "id"));
         model.addAttribute("allUserExpensesCategories", allUserExpensesCategories);
 
+        // Передаю в вид все банки пользователя
+        Iterable<Bank> allUserBanks = bankRepository.findByUserId(userId, Sort.by(Sort.Direction.DESC, "id"));
+        model.addAttribute("allUserBanks", allUserBanks);
+
         // Передаю в вид все типы лиц
         Iterable<PersonType> allPersonTypes = personTypeRepository.findAll();
         model.addAttribute("allPersonTypes", allPersonTypes);
@@ -279,7 +283,8 @@ public class BalanceController {
             String phone,
             String comment,
             Long recipientBankId,
-            Long senderBankId
+            Long senderBankId,
+            String recipientAccountNumber
     ) {
         Balance balance = new Balance();
 
@@ -308,6 +313,9 @@ public class BalanceController {
 
         // Сохраняю ИНН
         balance.setInn(inn);
+
+        // Сохраняю расчетный счет получателя
+        balance.setRecipientAccountNumber(recipientAccountNumber);
 
         // Сохраняю телефон
         balance.setPhone(phone);
@@ -353,7 +361,8 @@ public class BalanceController {
             String phone,
             String comment,
             Long recipientBankId,
-            Long senderBankId
+            Long senderBankId,
+            String recipientAccountNumber
     ) {
         Balance balance = new Balance();
 
@@ -378,6 +387,9 @@ public class BalanceController {
 
         // Сохраняю ИНН
         balance.setInn(inn);
+
+        // Сохраняю расчетный счет получателя
+        balance.setRecipientAccountNumber(recipientAccountNumber);
 
         // Сохраняю телефон
         balance.setPhone(phone);
@@ -476,7 +488,8 @@ public class BalanceController {
             String phone,
             String comment,
             Long recipientBankId,
-            Long senderBankId
+            Long senderBankId,
+            String recipientAccountNumber
     ) {
         // Получаю ID текущего пользователя
         User currentUser = userService.getCurrentUser();
@@ -499,6 +512,9 @@ public class BalanceController {
 
         // ИНН
         transaction.setInn(inn);
+
+        // Расчетный счет получателя
+        transaction.setRecipientAccountNumber(recipientAccountNumber);
 
         // Телефон
         transaction.setPhone(phone);
@@ -600,7 +616,8 @@ public class BalanceController {
             String phone,
             String comment,
             Long recipientBankId,
-            Long senderBankId
+            Long senderBankId,
+            String recipientAccountNumber
     ) {
         // Получаю ID текущего пользователя
         User currentUser = userService.getCurrentUser();
@@ -627,6 +644,9 @@ public class BalanceController {
 
         // ИНН
         transaction.setInn(inn);
+
+        // Расчетный счет получателя
+        transaction.setRecipientAccountNumber(recipientAccountNumber);
 
         // Телефон
         transaction.setPhone(phone);
