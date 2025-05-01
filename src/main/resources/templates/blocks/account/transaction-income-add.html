@@ -18,6 +18,8 @@
             <option th:each="userAccount : ${allUserAccounts}" th:value="${userAccount.id}" th:text="${userAccount.title}"></option>
         </select><br>
 
+        <input type="text" name="inn" class="form-control" placeholder="Введите ИНН" th:attr="pattern='\d{11}'" title="ИНН должен состоять ровно из 11 цифр" required/><br>
+
         <input th:required="required" type="date" name="date" placeholder="Выберите дату поступления" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" id="dateIncome" class="form-control"/><br>
 
         <input th:required="required" type="number" name="amount" min="0.01" step="0.01" placeholder="Введите сумму поступления" class="form-control"><br>

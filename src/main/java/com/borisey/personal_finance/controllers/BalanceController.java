@@ -260,7 +260,8 @@ public class BalanceController {
             @RequestParam Long personTypeId,
             Long accountId,
             Double amount,
-            String date
+            String date,
+            String inn
     ) {
         Balance balance = new Balance();
 
@@ -287,6 +288,9 @@ public class BalanceController {
         Type type = typeRepository.findById(Type.INCOME).orElseThrow();
         balance.setType(type);
 
+        // Сохраняю ИНН
+        balance.setInn(inn);
+
         // Сохраняю ID текущего пользователя
         User currentUser = userService.getCurrentUser();
         balance.setUserId(currentUser.getId());
@@ -312,7 +316,8 @@ public class BalanceController {
             @RequestParam Long personTypeId,
             Long accountId,
             String date,
-            Double amount
+            Double amount,
+            String inn
     ) {
         Balance balance = new Balance();
 
@@ -334,6 +339,9 @@ public class BalanceController {
 
         Type type = typeRepository.findById(Type.EXPENSE).orElseThrow();
         balance.setType(type);
+
+        // Сохраняю ИНН
+        balance.setInn(inn);
 
         // Сохраняю ID текущего пользователя
         User currentUser = userService.getCurrentUser();

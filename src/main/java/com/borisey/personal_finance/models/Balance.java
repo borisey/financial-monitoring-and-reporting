@@ -2,6 +2,7 @@ package com.borisey.personal_finance.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 
 import java.time.LocalDateTime;
 
@@ -16,6 +17,18 @@ public class Balance {
 
     private Long userId;
     private Long parentId;
+
+    @Pattern(regexp = "\\d{11}", message = "ИНН должен состоять ровно из 11 цифр")
+    @Column(length = 11)
+    private String inn;
+
+    public String getInn() {
+        return inn;
+    }
+
+    public void setInn(String inn) {
+        this.inn = inn;
+    }
 
     public Type getType() {
         return type;
