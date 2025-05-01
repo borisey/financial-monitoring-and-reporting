@@ -87,6 +87,10 @@ public class BalanceController {
         Iterable<Category> allUserExpensesCategories = categoryRepository.findByUserIdAndTypeIdAmount(userId, Type.EXPENSE, dateTimeFrom, dateTimeTo, Sort.by(Sort.Direction.DESC, "id"));
         model.addAttribute("allUserExpensesCategories", allUserExpensesCategories);
 
+        // Передаю в вид все типы лиц
+        Iterable<PersonType> allPersonTypes = personTypeRepository.findAll();
+        model.addAttribute("allPersonTypes", allPersonTypes);
+
         // Передаю в вид метатэги
         model.addAttribute("h1", "Транзакции");
         model.addAttribute("metaTitle", "Транзакции");
@@ -441,6 +445,10 @@ public class BalanceController {
         Iterable<PersonType> allPersonTypes = personTypeRepository.findAll();
         model.addAttribute("allPersonTypes", allPersonTypes);
 
+        // Передаю в вид все банки пользователя
+        Iterable<Bank> allUserBanks = bankRepository.findByUserId(userId, Sort.by(Sort.Direction.DESC, "id"));
+        model.addAttribute("allUserBanks", allUserBanks);
+
         // Передаю в вид имя пользователя
         model.addAttribute("username", username);
 
@@ -463,7 +471,12 @@ public class BalanceController {
             Double amount,
             Long categoryId,
             Long accountId,
-            String date
+            String date,
+            String inn,
+            String phone,
+            String comment,
+            Long recipientBankId,
+            Long senderBankId
     ) {
         // Получаю ID текущего пользователя
         User currentUser = userService.getCurrentUser();
@@ -484,9 +497,22 @@ public class BalanceController {
         PersonType personType = personTypeRepository.findById(personTypeId).orElseThrow();
         transaction.setPersonType(personType);
 
-        // Пополняю сумму на счет
-        account.setAmount(account.getAmount() + amount);
-        accountRepository.save(account);
+        // ИНН
+        transaction.setInn(inn);
+
+        // Телефон
+        transaction.setPhone(phone);
+
+        // Комментарий
+        transaction.setComment(comment);
+
+        // Банк отправителя
+        Bank senderBank = bankRepository.findById(senderBankId).orElseThrow();
+        transaction.setSenderBank(senderBank);
+
+        // Банк получателя
+        Bank recipientBank = bankRepository.findById(recipientBankId).orElseThrow();
+        transaction.setRecipientBank(recipientBank);
 
         // Сохраняю тип транзакции
         Type type = typeRepository.findById(typeId).orElseThrow();
@@ -542,6 +568,10 @@ public class BalanceController {
         Iterable<PersonType> allPersonTypes = personTypeRepository.findAll();
         model.addAttribute("allPersonTypes", allPersonTypes);
 
+        // Передаю в вид все банки пользователя
+        Iterable<Bank> allUserBanks = bankRepository.findByUserId(userId, Sort.by(Sort.Direction.DESC, "id"));
+        model.addAttribute("allUserBanks", allUserBanks);
+
         // Передаю в вид имя пользователя
         model.addAttribute("username", username);
 
@@ -565,7 +595,12 @@ public class BalanceController {
             Double amount,
             Long categoryId,
             Long accountId,
-            String date
+            String date,
+            String inn,
+            String phone,
+            String comment,
+            Long recipientBankId,
+            Long senderBankId
     ) {
         // Получаю ID текущего пользователя
         User currentUser = userService.getCurrentUser();
@@ -589,6 +624,23 @@ public class BalanceController {
         // Списываю сумму со счета
         account.setAmount(account.getAmount() - amount);
         accountRepository.save(account);
+
+        // ИНН
+        transaction.setInn(inn);
+
+        // Телефон
+        transaction.setPhone(phone);
+
+        // Комментарий
+        transaction.setComment(comment);
+
+        // Банк отправителя
+        Bank senderBank = bankRepository.findById(senderBankId).orElseThrow();
+        transaction.setSenderBank(senderBank);
+
+        // Банк получателя
+        Bank recipientBank = bankRepository.findById(recipientBankId).orElseThrow();
+        transaction.setRecipientBank(recipientBank);
 
         // Сохраняю тип транзакции
         Type type = typeRepository.findById(typeId).orElseThrow();

@@ -49,6 +49,46 @@
                             </select><br>
 
                             <p style="font-weight: bold;">
+                                Банк отправителя
+                            </p>
+                            <select class="form-control" name="senderBankId">
+                                <option th:each="bank : ${allUserBanks}"
+                                        th:value="${bank.id}"
+                                        th:text="${bank.title}"
+                                        th:selected="${el.senderBank != null} ? ${bank.id} == ${el.senderBank.id} : false">
+                                </option>
+                            </select><br>
+
+                            <p style="font-weight: bold;">
+                                Банк получателя
+                            </p>
+                            <select class="form-control" name="recipientBankId">
+                                <option th:each="bank : ${allUserBanks}"
+                                        th:value="${bank.id}"
+                                        th:text="${bank.title}"
+                                        th:selected="${el.recipientBank != null} ? ${bank.id} == ${el.recipientBank.id} : false">
+                                </option>
+                            </select><br>
+
+                            <p style="font-weight: bold;">
+                                ИНН
+                            </p>
+                            <input type="text" name="inn" th:value="${el.inn}" class="form-control"
+                                   pattern="\d{11}" title="ИНН должен состоять ровно из 11 цифр"><br>
+
+                            <p style="font-weight: bold;">
+                                Телефон
+                            </p>
+                            <input type="text" name="phone" th:value="${el.phone}" class="form-control"
+                                   pattern="(\+7|8)\d{10}" title="Телефон должен начинаться с +7 или 8 и содержать 11 цифр"><br>
+
+                            <p style="font-weight: bold;">
+                                Комментарий
+                            </p>
+                            <textarea name="comment" class="form-control" rows="3" placeholder="Введите комментарий к операции"
+                                      th:text="${el.comment}"></textarea><br>
+
+                            <p style="font-weight: bold;">
                                 Дата совершения платежа
                             </p>
                             <input th:required="required" type="date" name="date" th:value="${#temporals.format(el.date, 'yyyy-MM-dd')}" id="dateIncome" class="form-control"/><br>
