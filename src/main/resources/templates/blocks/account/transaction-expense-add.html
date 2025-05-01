@@ -32,7 +32,7 @@
 
         <input type="number" name="recipientAccountNumber" class="form-control" placeholder="Введите расчетный счет получателя" /><br>
 
-        <input type="text" name="phone" class="form-control" placeholder="Введите телефон (например, +79001234567 или 89001234567)" th:attr="pattern='(\\+7|8)\\d{10}'" title="Телефон должен начинаться с +7 или 8 и содержать 11 цифр" required /><br>
+        <input type="text" name="phone" id="phone" class="form-control" placeholder="Введите телефон (например, +79001234567 или 89001234567)" pattern="(\+7|8)\d{10}" title="Телефон должен начинаться с +7 или 8 и содержать 11 цифр" required /><br>
 
         <input th:required="required" type="date" name="date" placeholder="Выберите дату списания" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" id="dateExpense" class="form-control"/><br>
 
@@ -45,3 +45,16 @@
         </div>
     </form>
 </div>
+
+<script>
+    const phoneInput = document.getElementById('phone');
+    Inputmask({
+      mask: "(+7|8)9999999999",
+      placeholder: "",
+      definitions: {
+        '9': {
+          validator: "[0-9]"
+        }
+      }
+    }).mask(phoneInput);
+</script>

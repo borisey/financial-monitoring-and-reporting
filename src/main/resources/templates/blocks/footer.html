@@ -21,3 +21,16 @@
         </ul>
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const phoneInputs = document.querySelectorAll('input[name="phone"]');
+        phoneInputs.forEach(function (input) {
+            Inputmask({
+                mask: ["+79999999999", "89999999999"],
+                placeholder: "",
+                showMaskOnHover: false
+            }).mask(input);
+        });
+    });
+</script>
