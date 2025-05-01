@@ -7,11 +7,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 public interface BalanceRepository extends CrudRepository<Balance, Long> {
 
     Iterable<Balance> findAll(Sort colName);
+    List<Balance> findByUserId(Long userId);
 
     Optional<Balance> findByIdAndUserId(Long id, Long userId);
 
