@@ -1,0 +1,27 @@
+<div th:fragment="banks" xmlns:th="http://www.w3.org/1999/xhtml">
+    <h3 style="text-align: center">Все банки</h3>
+
+    <div class="table-responsive small">
+        <table class="table table-striped table-sm">
+            <thead>
+                <tr>
+                    <th style="text-align: center;">Название банка</th>
+                    <th style="text-align: center;">Действия</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr th:each="userBank : ${allUserBanks}">
+                    <td style="text-align: center;" th:text="${userBank.title}" />
+                    <td style="text-align: center;">
+                        <a th:href="'/bank/' + ${userBank.id} + '/edit'"><i class="far fa-edit"></i></a>
+                        <a th:href="'/bank/' + ${userBank.id} + '/delete'"><i class="far fa-trash-alt"></i></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div th:replace="~{blocks/account/bank-add :: bank-add}" />
+
+</div>

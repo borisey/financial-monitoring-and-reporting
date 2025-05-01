@@ -1,0 +1,16 @@
+<div th:fragment="bank-add" xmlns:th="http://www.w3.org/1999/xhtml">
+    <h4 style="text-align: center">Добавить банк</h4>
+    <form action="/bank/add" method="post">
+        <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+
+        <p style="font-weight: bold;">
+            Название банка
+        </p>
+
+        <input th:required="required" type="text" name="title" placeholder="Введите название банка (Сбербанк, Альфабанк)" class="form-control"><br>
+
+        <div style="text-align: center">
+            <button type="submit" class="btn btn-success">Добавить банк</button>
+        </div>
+    </form>
+</div>
