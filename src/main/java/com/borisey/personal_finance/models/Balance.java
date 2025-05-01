@@ -22,6 +22,22 @@ public class Balance {
     @Column(length = 11)
     private String inn;
 
+    @Pattern(
+            regexp = "^(\\+7|8)\\d{10}$",
+            message = "Телефон должен начинаться с +7 или 8 и содержать 11 цифр"
+    )
+
+    @Column(length = 12)
+    private String phone;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public String getInn() {
         return inn;
     }
