@@ -28,6 +28,8 @@ public class BalanceController {
     @Autowired
     private PersonTypeRepository personTypeRepository;
     @Autowired
+    private BankRepository bankRepository;
+    @Autowired
     private UserService userService;
 
     // Страница счетов пользователя
@@ -174,6 +176,10 @@ public class BalanceController {
         Iterable<PersonType> allPersonTypes = personTypeRepository.findAll();
         model.addAttribute("allPersonTypes", allPersonTypes);
 
+        // Передаю в вид все банки пользователя
+        Iterable<Bank> allUserBanks = bankRepository.findByUserId(userId, Sort.by(Sort.Direction.DESC, "id"));
+        model.addAttribute("allUserBanks", allUserBanks);
+
         // Передаю в вид метатэги
         model.addAttribute("h1", "Добавление дохода");
         model.addAttribute("metaTitle", "Добавление дохода");
@@ -243,6 +249,10 @@ public class BalanceController {
         Iterable<PersonType> allPersonTypes = personTypeRepository.findAll();
         model.addAttribute("allPersonTypes", allPersonTypes);
 
+        // Передаю в вид все банки пользователя
+        Iterable<Bank> allUserBanks = bankRepository.findByUserId(userId, Sort.by(Sort.Direction.DESC, "id"));
+        model.addAttribute("allUserBanks", allUserBanks);
+
         // Передаю в вид метатэги
         model.addAttribute("h1", "Добавление расхода");
         model.addAttribute("metaTitle", "Добавление расхода");
@@ -263,7 +273,9 @@ public class BalanceController {
             String date,
             String inn,
             String phone,
-            String comment
+            String comment,
+            Long recipientBankId,
+            Long senderBankId
     ) {
         Balance balance = new Balance();
 
@@ -299,6 +311,14 @@ public class BalanceController {
         // Сохраняю комментарий
         balance.setComment(comment);
 
+        // Сохраняю банк получателя
+        Bank recipientBank = bankRepository.findById(recipientBankId).orElseThrow();
+        balance.setRecipientBank(recipientBank);
+
+        // Сохраняю банк отправителя
+        Bank senderBank = bankRepository.findById(senderBankId).orElseThrow();
+        balance.setSenderBank(senderBank);
+
         // Сохраняю ID текущего пользователя
         User currentUser = userService.getCurrentUser();
         balance.setUserId(currentUser.getId());
@@ -327,7 +347,9 @@ public class BalanceController {
             Double amount,
             String inn,
             String phone,
-            String comment
+            String comment,
+            Long recipientBankId,
+            Long senderBankId
     ) {
         Balance balance = new Balance();
 
@@ -358,6 +380,14 @@ public class BalanceController {
 
         // Сохраняю комментарий
         balance.setComment(comment);
+
+        // Сохраняю банк получателя
+        Bank recipientBank = bankRepository.findById(recipientBankId).orElseThrow();
+        balance.setRecipientBank(recipientBank);
+
+        // Сохраняю банк отправителя
+        Bank senderBank = bankRepository.findById(senderBankId).orElseThrow();
+        balance.setSenderBank(senderBank);
 
         // Сохраняю ID текущего пользователя
         User currentUser = userService.getCurrentUser();

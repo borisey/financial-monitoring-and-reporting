@@ -18,6 +18,16 @@
             <option th:each="userAccount : ${allUserAccounts}" th:value="${userAccount.id}" th:text="${userAccount.title}"></option>
         </select><br>
 
+        <select th:required="required" class="form-control" id="addSenderBankId" name="senderBankId">
+            <option value="">--Выберите банк отправителя --</option>
+            <option th:each="userBank : ${allUserBanks}" th:value="${userBank.id}" th:text="${userBank.title}"></option>
+        </select><br>
+
+        <select th:required="required" class="form-control" id="addRecipientBankId" name="recipientBankId">
+            <option value="">--Выберите банк получателя --</option>
+            <option th:each="userBank : ${allUserBanks}" th:value="${userBank.id}" th:text="${userBank.title}"></option>
+        </select><br>
+
         <input type="text" name="inn" class="form-control" placeholder="Введите ИНН" th:attr="pattern='\d{11}'" title="ИНН должен состоять ровно из 11 цифр" required/><br>
 
         <input type="text" name="phone" class="form-control" placeholder="Введите телефон (например, +79001234567 или 89001234567)" th:attr="pattern='(\\+7|8)\\d{10}'" title="Телефон должен начинаться с +7 или 8 и содержать 11 цифр" required /><br>

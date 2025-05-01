@@ -173,6 +173,30 @@ public class Balance {
         this.updated = updated;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "sender_bank_id")
+    private Bank senderBank;
+
+    public Bank getSenderBank() {
+        return senderBank;
+    }
+
+    public void setSenderBank(Bank senderBank) {
+        this.senderBank = senderBank;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "recipient_bank_id")
+    private Bank recipientBank;
+
+    public Bank getRecipientBank() {
+        return recipientBank;
+    }
+
+    public void setRecipientBank(Bank recipientBank) {
+        this.recipientBank = recipientBank;
+    }
+
     // Дата пополнения или списания (выбирается пользователем)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime date;

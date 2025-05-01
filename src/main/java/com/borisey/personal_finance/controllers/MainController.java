@@ -31,6 +31,8 @@ public class MainController {
     @Autowired
     private PersonTypeRepository personTypeRepository;
     @Autowired
+    private BankRepository bankRepository;
+    @Autowired
     private UserService userService;
 
     @GetMapping({"/my/dateFrom={dateFrom}&dateTo={dateTo}","/my"})
@@ -107,6 +109,10 @@ public class MainController {
         // Передаю в вид все транзакции пользователя
         Iterable<Balance> allUserTransactions = balanceRepository.findByUserIdDateTimeFromDateTimeTo(userId, dateTimeFrom, dateTimeTo, Sort.by(Sort.Direction.DESC, "date", "id"));
         model.addAttribute("allUserTransactions", allUserTransactions);
+
+        // Передаю в вид все банки пользователя
+        Iterable<Bank> allUserBanks = bankRepository.findByUserId(userId, Sort.by(Sort.Direction.DESC, "id"));
+        model.addAttribute("allUserBanks", allUserBanks);
 
         // Передаю в вид имя пользователя
         model.addAttribute("username", username);
