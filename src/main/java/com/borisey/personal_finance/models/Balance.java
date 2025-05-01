@@ -46,6 +46,18 @@ public class Balance {
         this.inn = inn;
     }
 
+    @Lob
+    @Column(length = 3000)
+    private String comment;
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
     public Type getType() {
         return type;
     }

@@ -262,7 +262,8 @@ public class BalanceController {
             Double amount,
             String date,
             String inn,
-            String phone
+            String phone,
+            String comment
     ) {
         Balance balance = new Balance();
 
@@ -295,6 +296,9 @@ public class BalanceController {
         // Сохраняю телефон
         balance.setPhone(phone);
 
+        // Сохраняю комментарий
+        balance.setComment(comment);
+
         // Сохраняю ID текущего пользователя
         User currentUser = userService.getCurrentUser();
         balance.setUserId(currentUser.getId());
@@ -322,7 +326,8 @@ public class BalanceController {
             String date,
             Double amount,
             String inn,
-            String phone
+            String phone,
+            String comment
     ) {
         Balance balance = new Balance();
 
@@ -350,6 +355,9 @@ public class BalanceController {
 
         // Сохраняю телефон
         balance.setPhone(phone);
+
+        // Сохраняю комментарий
+        balance.setComment(comment);
 
         // Сохраняю ID текущего пользователя
         User currentUser = userService.getCurrentUser();
