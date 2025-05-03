@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Controller
 public class BalanceController {
@@ -452,43 +453,50 @@ public class BalanceController {
             @PathVariable(value = "id") Long id,
             Model model
     ) {
-        // Получаю ID текущего пользователя
         User currentUser = userService.getCurrentUser();
         Long userId = currentUser.getId();
         String username = currentUser.getUsername();
 
-        // Пользователь не может редактировать чужие записи
         Balance transaction = balanceRepository.findByIdAndUserId(id, userId).orElseThrow();
+
+        // Проверка статуса на запрет редактирования
+        String statusTitle = transaction.getTransactionStatus() != null
+                ? transaction.getTransactionStatus().getTitle()
+                : "";
+
+        List<String> forbiddenStatuses = List.of(
+                "Подтвержденная",
+                "В обработке",
+                "Отменена",
+                "Платеж выполнен",
+                "Платеж удален",
+                "Возврат"
+        );
+
+        if (forbiddenStatuses.contains(statusTitle)) {
+            return "redirect:/edit-disallowed";
+        }
+
+        // Передача данных в вид
         model.addAttribute("transaction", transaction);
 
-        // Счета
-
-        // Передаю в вид все счета пользователя
         Iterable<Account> allUserAccounts = accountRepository.findByUserId(userId, Sort.by(Sort.Direction.DESC, "id"));
         model.addAttribute("allUserAccounts", allUserAccounts);
 
-        // Категории
-
-        // Передаю в вид все категории доходов
         Iterable<Category> allUserIncomeCategories = categoryRepository.findByUserIdAndTypeId(userId, (byte) 1, Sort.by(Sort.Direction.DESC, "id"));
         model.addAttribute("allUserIncomeCategories", allUserIncomeCategories);
 
-        // Передаю в вид все типы лиц
         Iterable<PersonType> allPersonTypes = personTypeRepository.findAll();
         model.addAttribute("allPersonTypes", allPersonTypes);
 
-        // Передаю в вид все банки пользователя
         Iterable<Bank> allUserBanks = bankRepository.findByUserId(userId, Sort.by(Sort.Direction.DESC, "id"));
         model.addAttribute("allUserBanks", allUserBanks);
 
-        // Передаю в вид все статусы транзакций
         Iterable<TransactionStatus> allTransactionStatuses = transactionStatusRepository.findAll();
         model.addAttribute("allTransactionStatuses", allTransactionStatuses);
 
-        // Передаю в вид имя пользователя
         model.addAttribute("username", username);
 
-        // Передаю в вид метатэги
         model.addAttribute("h1", "Редактирование дохода");
         model.addAttribute("metaTitle", "Редактирование дохода");
         model.addAttribute("metaDescription", "Редактирование дохода");
@@ -497,12 +505,12 @@ public class BalanceController {
         return "transaction-income-edit";
     }
 
+    // Редактирование дохода
     @PostMapping("/transaction/income/{id}/edit")
     public String incomeEdit(
             HttpServletRequest request,
             @PathVariable(value = "id") Long id,
-            @RequestParam
-            Long typeId,
+            @RequestParam Long typeId,
             Long personTypeId,
             Double amount,
             Long categoryId,
@@ -594,6 +602,21 @@ public class BalanceController {
         // Пользователь не может редактировать чужие записи
         Balance transaction = balanceRepository.findByIdAndUserId(id, userId).orElseThrow();
 
+        // Запрещённые к редактированию статусы
+        List<String> forbiddenStatuses = List.of(
+                "Подтвержденная",
+                "В обработке",
+                "Отменена",
+                "Платеж выполнен",
+                "Платеж удален",
+                "Возврат"
+        );
+
+        if (forbiddenStatuses.contains(transaction.getTransactionStatus().getTitle())) {
+            return "redirect:/edit-disallowed";
+        }
+
+        // Возвращаем положительное значение для формы
         transaction.setAmount(-transaction.getAmount());
 
         model.addAttribute("transaction", transaction);
@@ -633,13 +656,12 @@ public class BalanceController {
         return "transaction-expense-edit";
     }
 
-    // Изменение расхода
+    // Редактирование расхода
     @PostMapping("/transaction/expense/{id}/edit")
     public String expenseEdit(
             HttpServletRequest request,
             @PathVariable(value = "id") Long id,
-            @RequestParam
-            Long typeId,
+            @RequestParam Long typeId,
             Long personTypeId,
             Double amount,
             Long categoryId,
@@ -660,7 +682,24 @@ public class BalanceController {
         // Пользователь не может редактировать чужие записи
         Balance transaction = balanceRepository.findByIdAndUserId(id, userId).orElseThrow();
 
-        // Сохраняю категорию
+        // Запрещённые к редактированию статусы
+        String currentStatusTitle = transaction.getTransactionStatus() != null
+                ? transaction.getTransactionStatus().getTitle()
+                : "";
+
+        List<String> forbiddenStatuses = List.of(
+                "Подтвержденная",
+                "В обработке",
+                "Отменена",
+                "Платеж выполнен",
+                "Платеж удален",
+                "Возврат"
+        );
+
+        if (forbiddenStatuses.contains(currentStatusTitle)) {
+            return "redirect:/edit-disallowed";
+        }
+
         Category category = categoryRepository.findById(categoryId).orElseThrow();
         transaction.setCategory(category);
 
@@ -734,7 +773,24 @@ public class BalanceController {
         // Пользователь не может удалять чужие записи
         Balance transaction = balanceRepository.findByIdAndUserId(id, userId).orElseThrow();
 
-        // Получаю статус "Платеж удален" (предположим, что статус уже существует)
+        // Запрещённые к редактированию статусы
+        String currentStatusTitle = transaction.getTransactionStatus() != null
+                ? transaction.getTransactionStatus().getTitle()
+                : "";
+
+        List<String> protectedStatuses = List.of(
+                "Подтвержденная",
+                "В обработке",
+                "Отменена",
+                "Платеж выполнен",
+                "Возврат"
+        );
+
+        if (protectedStatuses.contains(currentStatusTitle)) {
+            return "redirect:/deletion-disallowed";
+        }
+
+        // Меняем статус на "Платеж удален"
         TransactionStatus deletedStatus = transactionStatusRepository.findByTitle("Платеж удален")
                 .orElseThrow(() -> new RuntimeException("Статус 'Платеж удален' не найден"));
 
@@ -747,5 +803,17 @@ public class BalanceController {
         String referrer = request.getHeader("Referer");
 
         return "redirect:" + referrer;
+    }
+
+    @GetMapping("/edit-disallowed")
+    public String editDisallowed(Model model) {
+        model.addAttribute("message", "Редактирование этой транзакции запрещено. Ее статус не позволяет это действие.");
+        return "edit-disallowed";
+    }
+
+    @GetMapping("/deletion-disallowed")
+    public String deletionDisallowed(Model model) {
+        model.addAttribute("message", "Удаление этой транзакции запрещено. Ее статус не позволяет это действие.");
+        return "deletion-disallowed";
     }
 }
