@@ -116,6 +116,6 @@ Unit-тесты доступны в директории `src/test/java/com/bori
 
 #### 8. Выгрузка из БД integrationlog (логи)
 
-Выгрузка из БД integrationlog (логи) доступна по ссылке: [Выгрузка из БД integrationlog (логи)](https://github.com/borisey/)
+Выгрузка из БД integrationlog (логи) доступна по [ссылке](https://github.com/borisey/financial-monitoring-and-reporting/blob/main/files/integrationlog.sql.gz)
 
 #### 9. Выгрузка аудита БД
