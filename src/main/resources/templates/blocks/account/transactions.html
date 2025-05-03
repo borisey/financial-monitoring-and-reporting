@@ -2,8 +2,19 @@
     <h3 style="text-align: center">Транзакции за указанный период</h3>
 
     <div class="table-responsive small">
-        <table class="table table-striped table-sm">
+        <table id="transactionsTable" class="table table-striped table-sm">
             <thead>
+            <tr>
+                <th><input type="text" placeholder="Тип" onkeyup="filterTable(0)" class="form-control form-control-sm"/></th>
+                <th><input type="text" placeholder="Сумма" onkeyup="filterTable(1)" class="form-control form-control-sm"/></th>
+                <th><input type="text" placeholder="Категория" onkeyup="filterTable(2)" class="form-control form-control-sm"/></th>
+                <th><input type="text" placeholder="Счет" onkeyup="filterTable(3)" class="form-control form-control-sm"/></th>
+                <th><input type="text" placeholder="Банк отправителя" onkeyup="filterTable(4)" class="form-control form-control-sm"/></th>
+                <th><input type="text" placeholder="Банк получателя" onkeyup="filterTable(5)" class="form-control form-control-sm"/></th>
+                <th><input type="text" placeholder="Дата" onkeyup="filterTable(6)" class="form-control form-control-sm"/></th>
+                <th><input type="text" placeholder="Статус" onkeyup="filterTable(7)" class="form-control form-control-sm"/></th>
+                <th></th>
+            </tr>
             <tr>
                 <th style="text-align: center;">Тип</th>
                 <th style="text-align: center;">Сумма</th>
@@ -27,7 +38,6 @@
                 <td th:text="${userTransaction.recipientBank != null ? userTransaction.recipientBank.title : '—'}"/>
                 <td th:text="${#temporals.format(userTransaction.date, 'dd.MM.yyyy')}"/>
                 <td th:text="${userTransaction.transactionStatus != null ? userTransaction.transactionStatus.title : 'Не определен'}" style="text-align: center;"/>
-
                 <td th:switch="${userTransaction.type.id}" style="text-align: center;">
                     <a th:case="1" th:href="'/transaction/income/' + ${userTransaction.id} + '/edit'"><i class="far fa-edit"></i></a>
                     <a th:case="2" th:href="'/transaction/expense/' + ${userTransaction.id} + '/edit'"><i class="far fa-edit"></i></a>

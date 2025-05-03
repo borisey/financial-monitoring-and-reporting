@@ -26,6 +26,23 @@
 
     <script src="https://cdn.jsdelivr.net/npm/inputmask@5.0.8/dist/inputmask.min.js"></script>
 
+    <script>
+        function filterTable(columnIndex) {
+            const table = document.getElementById("transactionsTable");
+            const input = table.querySelectorAll("thead input")[columnIndex];
+            const filter = input.value.toLowerCase();
+            const rows = table.querySelector("tbody").getElementsByTagName("tr");
+
+            for (let i = 0; i < rows.length; i++) {
+                const cell = rows[i].getElementsByTagName("td")[columnIndex];
+                if (cell) {
+                    const text = cell.textContent || cell.innerText;
+                    rows[i].style.display = text.toLowerCase().indexOf(filter) > -1 ? "" : "none";
+                }
+            }
+        }
+    </script>
+
     <style>
         .bd-placeholder-img {
           font-size: 1.125rem;

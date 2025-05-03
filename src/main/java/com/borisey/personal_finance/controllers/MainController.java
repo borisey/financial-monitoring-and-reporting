@@ -37,13 +37,12 @@ public class MainController {
     @Autowired
     private TransactionStatusRepository transactionStatusRepository;
 
-    @GetMapping({"/my/dateFrom={dateFrom}&dateTo={dateTo}","/my"})
+    @GetMapping("/my")
     public String myPage(
-            HttpServletRequest request,
+            @RequestParam(required = false) String dateFrom,
+            @RequestParam(required = false) String dateTo,
             Model model
     ) {
-        String dateFrom = request.getParameter("dateFrom");
-        String dateTo = request.getParameter("dateTo");
         LocalDateTime dateTimeFrom;
         LocalDateTime dateTimeTo;
 
@@ -59,8 +58,8 @@ public class MainController {
 
         if (StringUtils.isEmpty(dateTo)) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            dateTimeTo = currentDateTime;
             dateTo = currentDateTime.format(formatter);
+            dateTimeTo = currentDateTime;
         } else {
             dateTimeTo = FormatService.formatDate(dateTo);
         }
