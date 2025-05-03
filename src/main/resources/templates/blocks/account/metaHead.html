@@ -59,7 +59,7 @@
                     const [startDate, endDate] = selectedDates;
 
                     for (let row of rows) {
-                        const cellDateStr = row.cells[6].textContent.trim(); // "dd.MM.yyyy"
+                        const cellDateStr = row.cells[7].textContent.trim(); // "dd.MM.yyyy"
                         const [day, month, year] = cellDateStr.split(".");
                         const cellDate = new Date(`${year}-${month}-${day}`);
 
@@ -75,7 +75,7 @@
                     const selectedStr = `${selectedDay}.${selectedMonth}.${selectedYear}`;
 
                     for (let row of rows) {
-                        const cellDateStr = row.cells[6].textContent.trim(); // "dd.MM.yyyy"
+                        const cellDateStr = row.cells[7].textContent.trim(); // "dd.MM.yyyy"
                         row.style.display = (cellDateStr === selectedStr) ? "" : "none";
                     }
 
@@ -87,6 +87,88 @@
                 }
             }
             });
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const table = document.getElementById("transactionsTable");
+            const rows = table.querySelector("tbody").getElementsByTagName("tr");
+
+            const textInputs = document.querySelectorAll(".filter-input");
+            const amountInput = document.querySelector(".filter-amount");
+            const dateInput = document.querySelector(".filter-date");
+
+            // Слушаем все поля
+            textInputs.forEach(input => input.addEventListener("input", filterAll));
+            if (amountInput) amountInput.addEventListener("input", filterAll);
+            if (dateInput) dateInput.addEventListener("input", filterAll);
+
+            function filterAll() {
+                const amountVal = amountInput?.value.trim().replace(",", ".") || "";
+                const dateVal = dateInput?.value.trim() || "";
+
+                // Парсинг суммы
+                let minAmount = Number.MIN_VALUE, maxAmount = Number.MAX_VALUE;
+                if (amountVal.includes("-")) {
+                    const parts = amountVal.split("-");
+                    minAmount = parseFloat(parts[0]) || Number.MIN_VALUE;
+                    maxAmount = parseFloat(parts[1]) || Number.MAX_VALUE;
+                } else if (amountVal) {
+                    const val = parseFloat(amountVal);
+                    if (!isNaN(val)) minAmount = maxAmount = val;
+                }
+
+                // Парсинг даты
+                let minDate = new Date("1900-01-01"), maxDate = new Date("2999-12-31");
+                if (dateVal.includes("-")) {
+                    const [start, end] = dateVal.split("-");
+                    minDate = parseDate(start.trim()) || minDate;
+                    maxDate = parseDate(end.trim()) || maxDate;
+                } else if (dateVal) {
+                    const exact = parseDate(dateVal.trim());
+                    if (exact) {
+                        minDate = exact;
+                        maxDate = exact;
+                    }
+                }
+
+                for (let row of rows) {
+                    let show = true;
+
+                    // Проверка текстовых колонок
+                    textInputs.forEach(input => {
+                        const col = parseInt(input.dataset.col);
+                        const cellText = row.cells[col].textContent.trim().toLowerCase();
+                        const filterVal = input.value.trim().toLowerCase();
+                        if (filterVal && !cellText.includes(filterVal)) {
+                            show = false;
+                        }
+                    });
+
+                    // Проверка суммы
+                    const amountCell = row.cells[1].textContent.trim().replace(",", ".");
+                    const amount = parseFloat(amountCell);
+                    if (!isNaN(amount) && (amount < minAmount || amount > maxAmount)) {
+                        show = false;
+                    }
+
+                    // Проверка даты
+                    const dateText = row.cells[7].textContent.trim();
+                    const rowDate = parseDate(dateText);
+                    if (rowDate && (rowDate < minDate || rowDate > maxDate)) {
+                        show = false;
+                    }
+
+                    row.style.display = show ? "" : "none";
+                }
+            }
+
+            function parseDate(str) {
+                const [day, month, year] = str.split(".");
+                if (!day || !month || !year) return null;
+                return new Date(`${year}-${month}-${day}`);
+            }
         });
     </script>
 
