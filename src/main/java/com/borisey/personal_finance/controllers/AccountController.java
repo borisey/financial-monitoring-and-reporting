@@ -13,12 +13,14 @@ import java.time.LocalDateTime;
 
 @Controller
 public class AccountController {
+    private final AccountRepository accountRepository;
+    private final UserService userService;
 
     @Autowired
-    private AccountRepository accountRepository;
-
-    @Autowired
-    private UserService userService;
+    public AccountController(AccountRepository accountRepository, UserService userService) {
+        this.accountRepository = accountRepository;
+        this.userService = userService;
+    }
 
     @PostMapping("/account/add")
     public String accountAccountAdd(
@@ -169,8 +171,6 @@ public class AccountController {
         } catch (Exception e) {
             return "redirect:/deletion-disallow";
         }
-
-        accountRepository.delete(account);
 
         String referrer = request.getHeader("Referer");
 
