@@ -26,6 +26,9 @@
 
     <script src="https://cdn.jsdelivr.net/npm/inputmask@5.0.8/dist/inputmask.min.js"></script>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
     <script>
         function filterTable(columnIndex) {
             const table = document.getElementById("transactionsTable");
@@ -41,6 +44,50 @@
                 }
             }
         }
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            flatpickr("#filterDateRange", {
+                mode: "range",
+                dateFormat: "d.m.Y",
+                onChange: function(selectedDates, dateStr, instance) {
+                const table = document.getElementById("transactionsTable");
+                const rows = table.querySelector("tbody").getElementsByTagName("tr");
+
+                if (selectedDates.length === 2) {
+                    const [startDate, endDate] = selectedDates;
+
+                    for (let row of rows) {
+                        const cellDateStr = row.cells[6].textContent.trim(); // "dd.MM.yyyy"
+                        const [day, month, year] = cellDateStr.split(".");
+                        const cellDate = new Date(`${year}-${month}-${day}`);
+
+                        row.style.display = (cellDate >= startDate && cellDate <= endDate) ? "" : "none";
+                    }
+
+                } else if (selectedDates.length === 1) {
+                    const [selectedDate] = selectedDates;
+                    const selectedDay = selectedDate.getDate().toString().padStart(2, '0');
+                    const selectedMonth = (selectedDate.getMonth() + 1).toString().padStart(2, '0');
+                    const selectedYear = selectedDate.getFullYear();
+
+                    const selectedStr = `${selectedDay}.${selectedMonth}.${selectedYear}`;
+
+                    for (let row of rows) {
+                        const cellDateStr = row.cells[6].textContent.trim(); // "dd.MM.yyyy"
+                        row.style.display = (cellDateStr === selectedStr) ? "" : "none";
+                    }
+
+                } else {
+                    // Показывать все строки, если даты не выбраны
+                    for (let row of rows) {
+                        row.style.display = "";
+                    }
+                }
+            }
+            });
+        });
     </script>
 
     <style>
