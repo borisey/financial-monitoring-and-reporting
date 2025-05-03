@@ -734,11 +734,15 @@ public class BalanceController {
         // Пользователь не может удалять чужие записи
         Balance transaction = balanceRepository.findByIdAndUserId(id, userId).orElseThrow();
 
-        try {
-            balanceRepository.delete(transaction);
-        } catch (Exception e) {
-            return "redirect:/deletion-disallow";
-        }
+        // Получаю статус "Платеж удален" (предположим, что статус уже существует)
+        TransactionStatus deletedStatus = transactionStatusRepository.findByTitle("Платеж удален")
+                .orElseThrow(() -> new RuntimeException("Статус 'Платеж удален' не найден"));
+
+        // Устанавливаю новый статус для транзакции
+        transaction.setTransactionStatus(deletedStatus);
+
+        // Сохраняю измененную транзакцию
+        balanceRepository.save(transaction);
 
         String referrer = request.getHeader("Referer");
 
