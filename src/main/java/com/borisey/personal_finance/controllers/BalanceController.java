@@ -98,6 +98,10 @@ public class BalanceController {
         Iterable<PersonType> allPersonTypes = personTypeRepository.findAll();
         model.addAttribute("allPersonTypes", allPersonTypes);
 
+        // Передаю в вид все статусы транзакций
+        Iterable<TransactionStatus> allTransactionStatuses = transactionStatusRepository.findAll();
+        model.addAttribute("allTransactionStatuses", allTransactionStatuses);
+
         // Передаю в вид метатэги
         model.addAttribute("h1", "Транзакции");
         model.addAttribute("metaTitle", "Транзакции");
