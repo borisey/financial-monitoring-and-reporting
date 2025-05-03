@@ -1,5 +1,5 @@
 <div th:fragment="transaction-expense-add" xmlns:th="http://www.w3.org/1999/xhtml">
-    <h4 style="text-align: center">Добавить расход</h4>
+    <h4 class="mt-5 mb-5" style="text-align: center">Добавить расход</h4>
     <form action="/transaction/add-expense" method="post">
         <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
 

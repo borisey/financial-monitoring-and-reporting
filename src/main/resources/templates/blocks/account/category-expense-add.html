@@ -1,5 +1,5 @@
 <div th:fragment="category-expense-add" xmlns:th="http://www.w3.org/1999/xhtml">
-    <h4 style="text-align: center">Добавить категорию расходов</h4>
+    <h4 class="mt-5 mb-5" style="text-align: center">Добавить категорию расходов</h4>
     <form action="/category/add" method="post">
         <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
         <input th:required="required" type="text" name="title" placeholder="Введите название категории (еда, одежда, развлечения)" class="form-control"><br>

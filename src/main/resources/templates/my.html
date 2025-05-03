@@ -78,7 +78,7 @@
 
 <!--        <main>-->
 
-            <h2 style="text-align: center">
+            <h2 style="text-align: center" class="mt-5 mb-5">
                 Выберите даты представления аналитики
             </h2>
 
@@ -94,12 +94,12 @@
 
             <div class="row">
                 <div class="col">
-                    <h3 style="text-align: center" th:each="userIncome : ${allUserIncome}">
+                    <h3 class="mt-5 mb-5" style="text-align: center" th:each="userIncome : ${allUserIncome}">
                         <p th:text="'Доходы за указанный период: ' + ${#numbers.formatDecimal(userIncome, 1, 2)}" />
                     </h3>
                 </div>
                 <div class="col">
-                    <h3 style="text-align: center" th:each="userExpense : ${allUserExpense}">
+                    <h3 class="mt-5 mb-5" style="text-align: center" th:each="userExpense : ${allUserExpense}">
                         <p th:text="'Расходы за указанный период: ' + ${#numbers.formatDecimal(userExpense, 1, 2)}" />
                     </h3>
                 </div>

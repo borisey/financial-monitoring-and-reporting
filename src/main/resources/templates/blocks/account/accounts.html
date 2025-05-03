@@ -1,5 +1,5 @@
 <div th:fragment="accounts" xmlns:th="http://www.w3.org/1999/xhtml">
-    <h3 style="text-align: center">Все счета</h3>
+    <h2 style="text-align: center" class="mt-5 mb-5">Все счета</h2>
     <div style="text-align: center" th:each="userAmount : ${allUserAmount}">
         <strong><p th:text="'Итого на всех счетах: ' + ${#numbers.formatDecimal(userAmount, 1, 2)}" /></strong>
     </div>

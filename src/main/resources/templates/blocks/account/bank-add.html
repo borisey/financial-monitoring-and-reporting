@@ -1,5 +1,5 @@
 <div th:fragment="bank-add" xmlns:th="http://www.w3.org/1999/xhtml">
-    <h4 style="text-align: center">Добавить банк</h4>
+    <h4 class="mt-5 mb-5" style="text-align: center">Добавить банк</h4>
     <form action="/bank/add" method="post">
         <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
 
