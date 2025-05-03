@@ -9,8 +9,10 @@
                 <th style="text-align: center;">Сумма</th>
                 <th style="text-align: center;">Категория</th>
                 <th style="text-align: center;">Счет</th>
+                <th style="text-align: center;">Банк отправителя</th>
+                <th style="text-align: center;">Банк получателя</th>
                 <th style="text-align: center;">Дата</th>
-                <th style="text-align: center;">Статус транзакции</th> <!-- Добавленная колонка -->
+                <th style="text-align: center;">Статус транзакции</th>
                 <th style="text-align: center;">Действия</th>
             </tr>
             </thead>
@@ -21,13 +23,12 @@
                 <td th:text="${#numbers.formatDecimal(userTransaction.amount, 1, 2)}"/>
                 <td th:text="${userTransaction.category.title}"/>
                 <td th:text="${userTransaction.account.title}"/>
+                <td th:text="${userTransaction.senderBank != null ? userTransaction.senderBank.title : '—'}"/>
+                <td th:text="${userTransaction.recipientBank != null ? userTransaction.recipientBank.title : '—'}"/>
                 <td th:text="${#temporals.format(userTransaction.date, 'dd.MM.yyyy')}"/>
-
-                <!-- Вывод статуса транзакции -->
                 <td th:text="${userTransaction.transactionStatus != null ? userTransaction.transactionStatus.title : 'Не определен'}" style="text-align: center;"/>
 
                 <td th:switch="${userTransaction.type.id}" style="text-align: center;">
-                    <!-- todo сделать константы -->
                     <a th:case="1" th:href="'/transaction/income/' + ${userTransaction.id} + '/edit'"><i class="far fa-edit"></i></a>
                     <a th:case="2" th:href="'/transaction/expense/' + ${userTransaction.id} + '/edit'"><i class="far fa-edit"></i></a>
                     <a th:href="'/transaction/' + ${userTransaction.id} + '/delete'"><i class="far fa-trash-alt"></i></a>
