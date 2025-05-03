@@ -114,8 +114,6 @@ src/
 
 Unit-тесты доступны в директории `src/test/java/com/borisey/personal_finance`
 
-#### 8. Выгрузка из БД integrationlog (логи)
+#### 8. Выгрузка из БД
 
 Выгрузка из БД integrationlog (логи) доступна по [ссылке](https://github.com/borisey/financial-monitoring-and-reporting/blob/main/files/integrationlog.sql.gz)
-
-#### 9. Выгрузка аудита БД
