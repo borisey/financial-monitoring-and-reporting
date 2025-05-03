@@ -31,6 +31,8 @@ public class BalanceController {
     private BankRepository bankRepository;
     @Autowired
     private UserService userService;
+    @Autowired
+    private TransactionStatusRepository transactionStatusRepository;
 
     // Страница счетов пользователя
     @GetMapping("/transactions")
@@ -184,6 +186,10 @@ public class BalanceController {
         Iterable<PersonType> allPersonTypes = personTypeRepository.findAll();
         model.addAttribute("allPersonTypes", allPersonTypes);
 
+        // Передаю в вид все статусы транзакций
+        Iterable<TransactionStatus> allTransactionStatuses = transactionStatusRepository.findAll();
+        model.addAttribute("allTransactionStatuses", allTransactionStatuses);
+
         // Передаю в вид все банки пользователя
         Iterable<Bank> allUserBanks = bankRepository.findByUserId(userId, Sort.by(Sort.Direction.DESC, "id"));
         model.addAttribute("allUserBanks", allUserBanks);
@@ -261,6 +267,10 @@ public class BalanceController {
         Iterable<Bank> allUserBanks = bankRepository.findByUserId(userId, Sort.by(Sort.Direction.DESC, "id"));
         model.addAttribute("allUserBanks", allUserBanks);
 
+        // Передаю в вид все статусы транзакций
+        Iterable<TransactionStatus> allTransactionStatuses = transactionStatusRepository.findAll();
+        model.addAttribute("allTransactionStatuses", allTransactionStatuses);
+
         // Передаю в вид метатэги
         model.addAttribute("h1", "Добавление расхода");
         model.addAttribute("metaTitle", "Добавление расхода");
@@ -284,7 +294,8 @@ public class BalanceController {
             String comment,
             Long recipientBankId,
             Long senderBankId,
-            String recipientAccountNumber
+            String recipientAccountNumber,
+            Long transactionStatusId
     ) {
         Balance balance = new Balance();
 
@@ -335,6 +346,10 @@ public class BalanceController {
         User currentUser = userService.getCurrentUser();
         balance.setUserId(currentUser.getId());
 
+        // Сохраняю статус транзакции
+        TransactionStatus transactionStatus = transactionStatusRepository.findById(transactionStatusId).orElseThrow();
+        balance.setTransactionStatus(transactionStatus);
+
         // Сохраняю дату и время
         LocalDateTime currentDateTime = LocalDateTime.now();
         balance.setCreated(currentDateTime);
@@ -362,7 +377,8 @@ public class BalanceController {
             String comment,
             Long recipientBankId,
             Long senderBankId,
-            String recipientAccountNumber
+            String recipientAccountNumber,
+            Long transactionStatusId
     ) {
         Balance balance = new Balance();
 
@@ -413,6 +429,10 @@ public class BalanceController {
         PersonType personType = personTypeRepository.findById(personTypeId).orElseThrow();
         balance.setPersonType(personType);
 
+        // Сохраняю статус транзакции
+        TransactionStatus transactionStatus = transactionStatusRepository.findById(transactionStatusId).orElseThrow();
+        balance.setTransactionStatus(transactionStatus);
+
         // Сохраняю дату и время
         LocalDateTime currentDateTime = LocalDateTime.now();
         balance.setCreated(currentDateTime);
@@ -461,6 +481,10 @@ public class BalanceController {
         Iterable<Bank> allUserBanks = bankRepository.findByUserId(userId, Sort.by(Sort.Direction.DESC, "id"));
         model.addAttribute("allUserBanks", allUserBanks);
 
+        // Передаю в вид все статусы транзакций
+        Iterable<TransactionStatus> allTransactionStatuses = transactionStatusRepository.findAll();
+        model.addAttribute("allTransactionStatuses", allTransactionStatuses);
+
         // Передаю в вид имя пользователя
         model.addAttribute("username", username);
 
@@ -489,7 +513,8 @@ public class BalanceController {
             String comment,
             Long recipientBankId,
             Long senderBankId,
-            String recipientAccountNumber
+            String recipientAccountNumber,
+            Long transactionStatusId
     ) {
         // Получаю ID текущего пользователя
         User currentUser = userService.getCurrentUser();
@@ -533,6 +558,10 @@ public class BalanceController {
         // Сохраняю тип транзакции
         Type type = typeRepository.findById(typeId).orElseThrow();
         transaction.setType(type);
+
+        // Сохраняю статус транзакции
+        TransactionStatus transactionStatus = transactionStatusRepository.findById(transactionStatusId).orElseThrow();
+        transaction.setTransactionStatus(transactionStatus);
 
         transaction.setAmount(amount);
         transaction.setDate(FormatService.formatDate(date));
@@ -588,6 +617,10 @@ public class BalanceController {
         Iterable<Bank> allUserBanks = bankRepository.findByUserId(userId, Sort.by(Sort.Direction.DESC, "id"));
         model.addAttribute("allUserBanks", allUserBanks);
 
+        // Передаю в вид все статусы транзакций
+        Iterable<TransactionStatus> allTransactionStatuses = transactionStatusRepository.findAll();
+        model.addAttribute("allTransactionStatuses", allTransactionStatuses);
+
         // Передаю в вид имя пользователя
         model.addAttribute("username", username);
 
@@ -617,7 +650,8 @@ public class BalanceController {
             String comment,
             Long recipientBankId,
             Long senderBankId,
-            String recipientAccountNumber
+            String recipientAccountNumber,
+            Long transactionStatusId
     ) {
         // Получаю ID текущего пользователя
         User currentUser = userService.getCurrentUser();
@@ -637,6 +671,10 @@ public class BalanceController {
         // Сохраняю тип лица
         PersonType personType = personTypeRepository.findById(personTypeId).orElseThrow();
         transaction.setPersonType(personType);
+
+        // Сохраняю статус транзакции
+        TransactionStatus transactionStatus = transactionStatusRepository.findById(transactionStatusId).orElseThrow();
+        transaction.setTransactionStatus(transactionStatus);
 
         // Списываю сумму со счета
         account.setAmount(account.getAmount() - amount);

@@ -40,6 +40,14 @@
 
         <textarea name="comment" class="form-control" rows="3" placeholder="Комментарий к операции (необязательно)"></textarea><br>
 
+        <select th:required="required" class="form-control" id="addTransactionStatusId" name="transactionStatusId">
+            <option value="">--Выберите статус транзакции--</option>
+            <option th:each="status : ${allTransactionStatuses}"
+                    th:value="${status.id}"
+                    th:text="${status.title}">
+            </option>
+        </select><br>
+
         <div style="text-align: center">
             <button type="submit" class="btn btn-success">Добавить расход</button>
         </div>

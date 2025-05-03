@@ -1,6 +1,5 @@
 package com.borisey.personal_finance.repo;
 
-import com.borisey.personal_finance.models.Balance;
 import com.borisey.personal_finance.models.Category;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;

@@ -34,6 +34,8 @@ public class MainController {
     private BankRepository bankRepository;
     @Autowired
     private UserService userService;
+    @Autowired
+    private TransactionStatusRepository transactionStatusRepository;
 
     @GetMapping({"/my/dateFrom={dateFrom}&dateTo={dateTo}","/my"})
     public String myPage(
@@ -113,6 +115,10 @@ public class MainController {
         // Передаю в вид все банки пользователя
         Iterable<Bank> allUserBanks = bankRepository.findByUserId(userId, Sort.by(Sort.Direction.DESC, "id"));
         model.addAttribute("allUserBanks", allUserBanks);
+
+        // Передаю в вид все статусы транзакций
+        Iterable<TransactionStatus> allTransactionStatuses = transactionStatusRepository.findAll();
+        model.addAttribute("allTransactionStatuses", allTransactionStatuses);
 
         // Передаю в вид имя пользователя
         model.addAttribute("username", username);

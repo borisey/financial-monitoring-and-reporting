@@ -138,6 +138,18 @@ public class Balance {
         this.parentId = parentId;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "transaction_status_id", nullable = true)
+    private TransactionStatus transactionStatus;
+
+    public TransactionStatus getTransactionStatus() {
+        return transactionStatus;
+    }
+
+    public void setTransactionStatus(TransactionStatus transactionStatus) {
+        this.transactionStatus = transactionStatus;
+    }
+
     public LocalDateTime getDate() {
         return date;
     }

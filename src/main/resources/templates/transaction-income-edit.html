@@ -106,6 +106,16 @@
                             <!-- todo сделать переключение доход/расход -->
                             <input type="hidden" id="typeId" name="typeId" th:value="${el.type.id}" /><br>
 
+                            <p style="font-weight: bold;">
+                                Статус транзакции
+                            </p>
+                            <select th:required="required" class="form-control" id="transactionStatusId" name="transactionStatusId">
+                                <option th:selected="${el.transactionStatus != null && el.transactionStatus.id == status.id}"
+                                        th:each="status : ${allTransactionStatuses}"
+                                        th:value="${status.id}"
+                                        th:text="${status.title}"></option>
+                            </select><br>
+
                             <button type="submit" class="btn btn-success">Обновить</button>
                         </form>
                     </div>
